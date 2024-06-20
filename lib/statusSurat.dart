@@ -142,6 +142,7 @@ class StatusSurat extends StatelessWidget {
                      ),
 
 
+
                      ///GANTI LINKNYA DENGAN LINK WEB TUJUAN UNTUK UNDUH
 
                      onPressed: () async {
@@ -150,7 +151,7 @@ class StatusSurat extends StatelessWidget {
 
 
                      child: Text(
-                         "Unduh ",
+                         "Unduh surat disini ",
                          style:
                          small.copyWith(color: Colors.white)
                      ),
