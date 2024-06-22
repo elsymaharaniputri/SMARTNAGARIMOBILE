@@ -13,6 +13,14 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   String? _selectedGender;
   final _dateController = TextEditingController();
+  // variabel untuk menyimpan data inputan user
+  String _nama = "";
+  String _nik = "";
+  String _tempatLahir = "";
+  String _tanggalLahir = "";
+  String _pekerjaan = "";
+  String _alamat = "";
+  String _email = "";
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -27,7 +35,43 @@ class _RegisterState extends State<Register> {
       });
     }
   }
+  void _sendDataToAPI() async {
+    final response = await http.post(
+      Uri.parse('https://link-api/register'),
+      body: {
+        'nama': _nama,
+        'nik': _nik,
+        'tempat_lahir': _tempatLahir,
+        'tanggal_lahir': _tanggalLahir,
+        'jenis_kelamin': _selectedGender,
+        'pekerjaan': _pekerjaan,
+        'alamat': _alamat,
+        'email': _email,
+      },
+    );
 
+    if (response.statusCode == 200) {
+      CoolAlert.show(
+        context: context,
+        type: CoolAlertType.success,
+        text: 'Registrasi berhasil!',
+        confirmBtnText: 'OK',
+        confirmBtnColor: tosca_primer,
+        title: 'Sukses',
+        backgroundColor: orange_sekunder,
+      );
+    } else {
+      CoolAlert.show(
+        context: context,
+        type: CoolAlertType.error,
+        text: 'Registrasi gagal. Silahkan coba lagi.',
+        confirmBtnText: 'OK',
+        confirmBtnColor: Colors.red,
+        title: 'Gagal',
+        backgroundColor: orange_sekunder,
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final mywidth = MediaQuery.of(context).size.width;
