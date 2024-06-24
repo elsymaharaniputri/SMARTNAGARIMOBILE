@@ -5,8 +5,11 @@ import 'package:flutter/widgets.dart';
 import 'home.dart';
 import 'register.dart';
 
+
 class Login extends StatelessWidget {
   const Login({super.key});
+
+  get http => null;
 
   @override
   Widget build(BuildContext context) {
@@ -132,9 +135,30 @@ class Login extends StatelessWidget {
                 style: small.copyWith(color: Colors.black), // Membetulkan penugasan style
               ),
               TextButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
+                onPressed: () async {
+                  // Get username and password from text fields (assuming controllers)
+                  var usernameController;
+                  var passwordController;
+                  final username = usernameController.text;
+                  final password = passwordController.text;
+
+                  // API
+                  final response = await http.post(
+                    Uri.parse('https://url-api/login'),
+                    body: {'username': username, 'password': password},
+                  );
+
+                  // respon API
+                  if (response.statusCode == 200) {
+                    // Login berhasil, masuk ke laman home
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                  } else {
+                    // Login failed (show error message)
+                    print('Login gagal: ${response.statusCode}');
+                    // pesan error gagal login ke pengguna
+                  }
                 },
+
                 child: Text("Register",
                style: small.copyWith(color:orange),
               ),

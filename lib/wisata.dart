@@ -30,6 +30,7 @@ class Wisata extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             // Tindakan untuk kembali ke layar sebelumnya
+          Navigator.pop(context);
           },
         ),
       ),
